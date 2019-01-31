@@ -26,9 +26,12 @@ class BooksApp extends React.Component {
 
 
   render() {
+
+    const { books } = this.state
+    
     return (
       <div className="app">
-        <BookList books={this.state.books}/>
+        <BookList books={books}/>
       </div>
     )
   }
