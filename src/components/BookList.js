@@ -5,7 +5,7 @@ import BookShelf from './BookShelf'
 class BookList extends Component {
     render() {
 
-        const { books } = this.props
+        const { books, updateShelf} = this.props
     
         return (
             <div>
@@ -34,7 +34,7 @@ class BookList extends Component {
                         <h1>MyReads</h1>
                     </div>
                     <div className="list-books-content">
-                        <BookShelf books={books} />
+                        <BookShelf books={books} updateShelf={updateShelf}/>
                     </div>
                     <div className="open-search">
                         <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
