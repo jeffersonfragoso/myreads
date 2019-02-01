@@ -2,6 +2,7 @@ import React from 'react'
 import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import BookList from './components/BookList'
+import BookSearch from './components/BookSearch';
 
 
 class BooksApp extends React.Component {
@@ -18,10 +19,10 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-        this.setState(() => ({
-          books
-        }))
-      })
+      this.setState(() => ({
+        books
+      }))
+    })
   }
 
   updateShelf = (book, shelfName) => {
@@ -30,27 +31,37 @@ class BooksApp extends React.Component {
       // update existing
       bookFromState.shelf = shelfName;
       BooksAPI.update(book, shelfName)
-      .then(this.setState(currentState => ({
-        books: currentState.books
-      })))
+        .then(this.setState(currentState => ({
+          books: currentState.books
+        })))
     } else {
       // add new one
-        book.shelf = shelfName;
-        BooksAPI.update(book, shelfName)
+      book.shelf = shelfName;
+      BooksAPI.update(book, shelfName)
         .then(this.setState(prevState => ({
           books: prevState.books.concat(book)
-      })))
+        })))
     }
   };
 
 
   render() {
 
-    const { books } = this.state
+    const { books, showSearchPage } = this.state
 
     return (
       <div className="app">
-        <BookList books={books} updateShelf = {this.updateShelf} />
+        {showSearchPage || (
+          <>
+            <BookList books={books} updateShelf={this.updateShelf} />
+            <div className="open-search">
+              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+            </div>
+          </>
+        )}
+        {showSearchPage && (
+          <BookSearch closeSearchPage={() => this.setState({ showSearchPage: false })}/>
+        )}
       </div>
     )
   }
