@@ -11,15 +11,12 @@ class BooksApp extends React.Component {
     books: []
   }
 
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState(() => ({
-        books
-      }))
-    })
+  async componentDidMount() {
+    const books = await BooksAPI.getAll()
+      this.setState({books})
   }
 
-  updateShelf = (book, shelfName) => {
+     updateShelf = (book, shelfName) => {
 
     const bookFromState = this.state.books.find(b => b.id === book.id);
 
@@ -36,8 +33,7 @@ class BooksApp extends React.Component {
             books: prevState.books.concat(book)
           })))
     }
-  };
-
+  }; 
 
   render() {
 
