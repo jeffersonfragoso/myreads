@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import * as BooksAPI from '../utils/BooksAPI'
 import { Link } from 'react-router-dom'
 import Book from './Book'
+import NoResults from './NoResults'
 
 class BookSearch extends Component {
 
     state = {
+        termsToSearch: "",
         results: []
     }
 
     resultsQuery = (e) => {
 
-        BooksAPI.search(e.target.value).then(books => {
+        const terms = e.target.value
+        this.setState({termsToSearch: terms })
+
+        BooksAPI.search(terms).then(books => {
             if (books) {
                 this.setState({ results: books })
             } else {
@@ -23,7 +28,7 @@ class BookSearch extends Component {
 
     render() {
 
-        const { results } = this.state
+        const { termsToSearch, results } = this.state
         const { updateShelf } = this.props
 
         return (
@@ -41,13 +46,13 @@ class BookSearch extends Component {
                     <div className="search-books-results">
                         <ol className="books-grid">
                             {
-                                (results.length > 0) ? (results.map((book) => (
-                                    (!!book.shelf) ||
+                                ((results.length > 0) && (termsToSearch !== "")) ?
+                                    (results.map(book => (
                                         <Book key={book.id}
-                                              book={book}
-                                              updateShelf={updateShelf}
-                                        />
-                                ))) : <p>No results for this terms!</p>
+                                            book={book}
+                                            updateShelf={updateShelf}
+                                        />))
+                                ) : <NoResults terms={termsToSearch} />
                             }
                         </ol>
                     </div>
