@@ -1,9 +1,0 @@
-refatorar: Redenrização dinâmica dos livros, conforme as prateleiras (shelfs), no componente BookList.js
-refatorar: Implentação do componente BookShelf.js para renderizar cada tipo específico de prateleiras com seus livros correspodentes.
-refatorar: Implementação do componente Book.js para renderizar apenas as informações dos livros.
-feature: Implementação de "updateShelf" e ajustes para utiliza-lo
-refatorar: Implementação inicial do componente BookSearch.js. Apenas criando uma página.
-feature: Adicionando e utilizando a biblioteca 'reat-router-dom' para manipular a navegação entre as páginas.
-feature: Implementação do mecanismo de pesquisa em BookSearch.js
-
-refatorar: Fazendo que o livro saia da lista de resultados ao selecionar uma prateleira
