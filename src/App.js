@@ -20,20 +20,21 @@ class BooksApp extends React.Component {
   }
 
   updateShelf = (book, shelfName) => {
-    
+
     const bookFromState = this.state.books.find(b => b.id === book.id);
+
     if (bookFromState) {
       bookFromState.shelf = shelfName;
       BooksAPI.update(book, shelfName)
         .then(this.setState(currentState => ({
           books: currentState.books
         })))
-    } else {
-      book.shelf = shelfName;
-      BooksAPI.update(book, shelfName)
-        .then(this.setState(prevState => ({
-          books: prevState.books.concat(book)
-        })))
+    } else if(book.shelf === undefined) {
+        book.shelf = shelfName;
+        BooksAPI.update(book, shelfName)
+          .then(this.setState(prevState => ({
+            books: prevState.books.concat(book)
+          })))
     }
   };
 
@@ -45,14 +46,14 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <Fragment>
+           <Fragment>
             <BookList books={books} updateShelf={this.updateShelf} />
             <Link to="/BookSearch" className="open-search">Add a book</Link>
           </Fragment>
         )} />
 
         <Route exact path="/BookSearch" render={() => (
-          <BookSearch updateShelf={this.updateShelf}/>
+          <BookSearch updateShelf={this.updateShelf} />
         )} />
       </div>
     )

@@ -6,22 +6,16 @@ import Book from './Book'
 class BookSearch extends Component {
 
     state = {
-        query: "",
         results: []
     }
 
-
     resultsQuery = (e) => {
 
-        const query = e.target.value
-
-        this.setState(() => ({ query }))
-
-        BooksAPI.search(query).then(books => {
+        BooksAPI.search(e.target.value).then(books => {
             if (books) {
-                  this.setState({ results: books })
+                this.setState({ results: books })
             } else {
-                  this.setState({ results: [] })
+                this.setState({ results: [] })
             }
         })
 
@@ -29,7 +23,7 @@ class BookSearch extends Component {
 
     render() {
 
-        const { query, results } = this.state
+        const { results } = this.state
         const { updateShelf } = this.props
 
         return (
@@ -40,19 +34,20 @@ class BookSearch extends Component {
                         <div className="search-books-input-wrapper">
                             <input type="text"
                                 placeholder="Search by title or author"
-                                value={query}
                                 onChange={this.resultsQuery}
                             />
                         </div>
                     </div>
                     <div className="search-books-results">
                         <ol className="books-grid">
-                            {results.length > 0 ? (results.map((book) => (
-                                <Book key={book.id}
-                                    book={book}
-                                    updateShelf={updateShelf}
-                                />
-                            ))) : (<p></p>)
+                            {
+                                (results.length > 0) ? (results.map((book) => (
+                                    (!!book.shelf) ||
+                                        <Book key={book.id}
+                                              book={book}
+                                              updateShelf={updateShelf}
+                                        />
+                                ))) : <p>No results for this terms!</p>
                             }
                         </ol>
                     </div>
