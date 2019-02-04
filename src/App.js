@@ -16,7 +16,7 @@ class BooksApp extends React.Component {
       this.setState({books})
   }
 
-     updateShelf = (book, shelfName) => {
+  updateShelf = (book, shelfName) => {
 
     const bookFromState = this.state.books.find(b => b.id === book.id);
 
@@ -49,7 +49,7 @@ class BooksApp extends React.Component {
         )} />
 
         <Route exact path="/BookSearch" render={() => (
-          <BookSearch updateShelf={this.updateShelf} />
+          <BookSearch books={books} updateShelf={this.updateShelf} />
         )} />
       </div>
     )

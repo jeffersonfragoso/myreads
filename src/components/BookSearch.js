@@ -14,16 +14,26 @@ class BookSearch extends Component {
     resultsQuery = (e) => {
 
         const terms = e.target.value
-        this.setState({termsToSearch: terms })
 
-        BooksAPI.search(terms).then(books => {
-            if (books) {
-                this.setState({ results: books })
-            } else {
-                this.setState({ results: [] })
-            }
-        })
+        this.setState({ termsToSearch: terms })
 
+        if (terms.length) {
+            BooksAPI.search(terms).then(books => {
+                if (books.length) {
+                    this.booksInShelvs(books)
+                    this.setState({ results: books })
+                } else {
+                    this.setState({ results: []})
+                }
+            })
+        }
+
+    }
+
+    booksInShelvs = (results) => {
+       results.filter(result => this.props.books.find(book => {
+            (result.id === book.id) && (result.shelf = book.shelf)
+        }))
     }
 
     render() {
@@ -49,10 +59,10 @@ class BookSearch extends Component {
                                 ((results.length > 0) && (termsToSearch !== "")) ?
                                     (results.map(book => (
                                         <Book key={book.id}
-                                            book={book}
-                                            updateShelf={updateShelf}
-                                        />))
-                                ) : <NoResults terms={termsToSearch} />
+                                              book={book}
+                                              updateShelf={updateShelf}
+                                        />))) :
+                                    <NoResults terms={termsToSearch} />
                             }
                         </ol>
                     </div>
