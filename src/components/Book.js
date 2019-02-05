@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 
-const Book = ({ book, updateShelf }) => {
+class Book extends PureComponent {
 
-    let onChangeShelf = event => {
-        updateShelf(book, event.target.value)
+    onChangeShelf = event => {
+        this.props.updateShelf(this.book, event.target.value)
     }
 
-    return (
+    render() {
+
+        const {book} = this.props
+
+        return (
             <li>
                 <div key={book.id} className="book">
                     <div className="book-top">
@@ -18,7 +22,7 @@ const Book = ({ book, updateShelf }) => {
                             }}>
                         </div>
                         <div className="book-shelf-changer">
-                            <select onChange={onChangeShelf} defaultValue={book.shelf ? book.shelf : 'none'}>
+                            <select onChange={this.onChangeShelf} defaultValue={book.shelf ? book.shelf : 'none'}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -31,7 +35,9 @@ const Book = ({ book, updateShelf }) => {
                     <div className="book-authors">{(book.authors) && (book.authors)}</div>
                 </div>
             </li>
-    )
+        )
+    }
+
 }
 
 export default Book 
