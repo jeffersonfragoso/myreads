@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as BooksAPI from '../utils/BooksAPI'
 import { Link } from 'react-router-dom'
+import debounce from 'lodash/debounce'
 import Book from './Book'
 import NoResults from './NoResults'
 
@@ -11,27 +12,28 @@ class BookSearch extends Component {
         results: []
     }
 
-    resultsQuery = (e) => {
-
-        const terms = e.target.value
-
+    resultsQuery = debounce((terms) => {
+        
         this.setState({ termsToSearch: terms })
 
         if (terms.length) {
             BooksAPI.search(terms).then(books => {
                 if (books.length) {
                     this.booksInShelvs(books)
-                    this.setState({ results: books })
+                    this.setState({ results: books})
                 } else {
-                    this.setState({ results: []})
+                    this.setState({ results: [] })
                 }
             })
         }
+    }, 500)
 
+    getEvent = (evento) => {
+        this.resultsQuery(evento.target.value)
     }
 
     booksInShelvs = (results) => {
-       results.filter(result => this.props.books.find(book => {
+        results.filter(result => this.props.books.find(book => {
             (result.id === book.id) && (result.shelf = book.shelf)
         }))
     }
@@ -49,7 +51,8 @@ class BookSearch extends Component {
                         <div className="search-books-input-wrapper">
                             <input type="text"
                                 placeholder="Search by title or author"
-                                onChange={this.resultsQuery}
+                                onChange={this.getEvent}
+
                             />
                         </div>
                     </div>
@@ -59,8 +62,8 @@ class BookSearch extends Component {
                                 ((results.length > 0) && (termsToSearch !== "")) ?
                                     (results.map(book => (
                                         <Book key={book.id}
-                                              book={book}
-                                              updateShelf={updateShelf}
+                                            book={book}
+                                            updateShelf={updateShelf}
                                         />))) :
                                     <NoResults terms={termsToSearch} />
                             }
