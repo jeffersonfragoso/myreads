@@ -5,7 +5,7 @@ Projeto desenvolvido para finalizar o primeiro módulo do `Nanodegree Desenvolve
 
 ## Acesse a versão online:
 
-`http://myreads-jefferson.surge.sh/`
+http://myreads-jefferson.surge.sh/
 
 ## Para baixar o projeto:
 ```git
