@@ -12,19 +12,18 @@ class BookSearch extends Component {
         results: []
     }
 
-    resultsQuery = debounce((terms) => {
-        
+    resultsQuery = debounce(async (terms) => {
+
         this.setState({ termsToSearch: terms, results: [] })
 
         if (terms.length) {
-            BooksAPI.search(terms).then(books => {
-                if (books.length) {
-                    this.booksInShelvs(books)
-                    this.setState({ results: books})
-                } else {
-                    this.setState({ results: [] })
-                }
-            })
+            const booksFound = await BooksAPI.search(terms)
+            if (booksFound.length) {
+                this.booksInShelvs(booksFound)
+                this.setState({ results: booksFound })
+            } else {
+                this.setState({ results: [] })
+            }
         }
     }, 500)
 
