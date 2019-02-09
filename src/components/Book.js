@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 class Book extends PureComponent {
 
     onChangeShelf = event => {
-        this.props.updateShelf(this.book, event.target.value)
+        this.props.updateShelf(this.props.book, event.target.value)
     }
 
     render() {
