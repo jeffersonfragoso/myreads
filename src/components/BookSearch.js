@@ -14,7 +14,7 @@ class BookSearch extends Component {
 
     resultsQuery = debounce((terms) => {
         
-        this.setState({ termsToSearch: terms })
+        this.setState({ termsToSearch: terms, results: [] })
 
         if (terms.length) {
             BooksAPI.search(terms).then(books => {
