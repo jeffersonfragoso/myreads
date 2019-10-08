@@ -20,7 +20,7 @@ $ git clone https://github.com/jeffersonfragoso/myreads.git
 ## Recursos Udacity:
 
 - Template inicial do projeto. (https://github.com/udacity/reactnd-project-myreads-starter)
-- Informações sobre o serviço back-end]. (https://github.com/udacity/reactnd-project-myreads-starter#backend-server)
+- Informações sobre o serviço back-end. (https://github.com/udacity/reactnd-project-myreads-starter#backend-server)
 - Especificações do Projeto. (https://review.udacity.com/#!/rubrics/918/view)
 
 ## Recursos Adicionais:
